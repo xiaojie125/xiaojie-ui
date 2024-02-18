@@ -1,54 +1,77 @@
-<!-- 整体布局 -->
 <template>
-  <el-container id="components-layout-demo-custom-trigger">
-    <!-- 左侧菜单列表 -->
-    <el-aside width="auto">
-      <Aside />
-    </el-aside>
-    <!-- 右侧 -->
-    <el-container>
-      <!-- 顶部部分 -->
-      <el-header class="header">
-        <Header />
-      </el-header>
-      <!-- 核心内容部分 -->
-      <el-main>
-        <transition name="fade" mode="out-in">
-          <keep-alive>
-            <router-view v-if="$route.meta.keepAlive"></router-view>
-          </keep-alive>
-        </transition>
-        <router-view v-if="!$route.meta.keepAlive"></router-view>
-      </el-main>
-    </el-container>
-  </el-container>
+  <div class="app-wrapper" :class="{ hideSidebar: isCollapse }">
+    <sidebar class="sidebar-container" />
+    <div class="main-container">
+      <div>
+        <navbar @getSidebarOpened="getSidebarOpened" />
+      </div>
+      <app-main />
+    </div>
+  </div>
 </template>
 
 <script>
-import Aside from "./components/Aside";
-import Header from "./components/Header";
+import { Navbar, Sidebar, AppMain } from "./components";
+
 export default {
-  name: "layout",
-  data() {
-    return {};
+  name: "Layout",
+  components: {
+    Navbar,
+    Sidebar,
+    AppMain,
   },
-
-  components: { Aside, Header },
-
-  computed: {},
-
-  methods: {},
+  data() {
+    return {
+      isCollapse: false,
+    };
+  },
+  methods: {
+    // 获取当前的状态
+    getSidebarOpened(value) {
+      this.isCollapse = !value
+    },
+  },
 };
 </script>
-<style lang="scss" scoped>
-#components-layout-demo-custom-trigger {
-  height: 100vh;
 
-  .el-header {
-    box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+<style lang="scss" scoped>
+@import "~@/styles/mixin.scss";
+@import "~@/styles/variables.scss";
+
+.app-wrapper {
+  @include clearfix;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  &.mobile.openSidebar {
+    position: fixed;
+    top: 0;
   }
-  .el-main {
-    padding-top: 0;
-  }
+}
+.drawer-bg {
+  background: #000;
+  opacity: 0.3;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+}
+
+.fixed-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9;
+  width: calc(100% - #{$sideBarWidth});
+  transition: width 0.28s;
+}
+
+.hideSidebar .fixed-header {
+  width: calc(100% - 54px);
+}
+
+.mobile .fixed-header {
+  width: 100%;
 }
 </style>
