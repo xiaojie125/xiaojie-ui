@@ -64,6 +64,12 @@ const routes = [
         component: () => import("@/views/components/button"),
         meta: { title: "按钮", icon: "button" },
       },
+      {
+        path: "tags",
+        name: "可分割的边",
+        component: () => import("@/views/components/tags"),
+        meta: { title: "标签", icon: "tag" },
+      },
     ],
   },
   // 指令
@@ -106,6 +112,20 @@ const routes = [
         name: "ECharts",
         component: () => import("@/views/echarts/line"),
         meta: { title: "折线图", icon: "line" },
+      },
+    ],
+  },
+  // 二次封装组件
+  {
+    path: "/pro",
+    name: "pro",
+    component: Layout,
+    redirect: "/pro/form",
+    children: [
+      {
+        path: "form",
+        meta: { title: "表单", icon: "form" },
+        component: () => import("@/views/proComponents/form/index"),
       },
     ],
   },
