@@ -1,6 +1,6 @@
 <template>
   <el-form class="pro-form" ref="form" :model="form" v-bind="$attrs">
-    <el-row :gutter="16">
+    <el-row :gutter="16" class="form-content">
       <el-col v-for="item in formItems" :key="item.key" :span="item.span || 24">
         <el-form-item
           v-if="item._isShow"
@@ -104,5 +104,9 @@ export default {
 .pro-form {
   padding: 12px;
   background: white;
+}
+.form-content{
+  display: flex;
+  flex-direction: column;
 }
 </style>

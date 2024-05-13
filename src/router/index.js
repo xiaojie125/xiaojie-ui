@@ -120,12 +120,18 @@ const routes = [
     path: "/pro",
     name: "pro",
     component: Layout,
+    meta: { title: "pro组件", icon: "el-icon-menu" },
     redirect: "/pro/form",
     children: [
       {
         path: "form",
-        meta: { title: "表单", icon: "form" },
+        meta: { title: "新增表单", icon: "form" },
         component: () => import("@/views/proComponents/form/index"),
+      },
+      {
+        path: "search",
+        meta: { title: "搜索表单", icon: "el-icon-search" },
+        component: () => import("@/views/proComponents/search/index"),
       },
     ],
   },
